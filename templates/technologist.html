@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block menu %}
+    <ul class="nav nav-tabs">
+        <li role="presentation"><a href="{% url 'bid' %}">Продажи</a></li>
+        <li role="presentation"><a href="{% url 'designer' %}">Конструкторы</a></li>
+        <li role="presentation" class="active"><a href="{% url 'technologist' %}">Технологи</a></li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+
+    <h3>Технологи</h3>
+
+    <table class="table table-condensed table-striped">
+        <tr>
+            <th><strong>Комплектующая</strong></th>
+            <th><strong>Наименование сырья</strong></th>
+            <th><strong>RAL</strong></th>
+            <th><strong>Сырьё на профиль, кг/м</strong></th>
+            <th><strong>Сырьё на переналадку, кг</strong></th>
+            <th><strong>Серия, кг/1000 м.п.</strong></th>
+        </tr>
+        {% for rawmaterial in rawmaterials %}
+            <tr>
+                <td>{{ rawmaterial.composition.name }}</td>
+                <td>{{ rawmaterial.name }}</td>
+                <td>{{ rawmaterial.ral }}</td>
+                <td>{{ rawmaterial.rm_profile }}</td>
+                <td>{{ rawmaterial.rm_repurposing }}</td>
+                <td>{{ rawmaterial.series }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <div>
+        <a href="{% url 'add_technologist' %}" class="btn btn-success" role="button">Добавить</a>
+    </div>
+
+    <hr>
+
+    <div>
+        {% for zzz in z2 %}
+            <p>{{ zzz.month }}&nbsp;{{ zzz.composition__name }}&nbsp;{{ zzz.amount__sum }}</p>
+        {% endfor %}
+    </div>
+
+    {% comment %}<hr>
+
+    <div>
+        {% for zzz in z1 %}
+            <p>{{ zzz.month }}&nbsp;{{ zzz.composition__name }}&nbsp;{{ zzz.amount__sum }}&nbsp;</p>
+        {% endfor %}
+    </div>{% endcomment %}
+{% endblock %}

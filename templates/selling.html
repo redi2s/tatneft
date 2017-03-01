@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block content %}
+
+    <h3>Заявки</h3>
+
+    <table class="table table-condensed table-striped">
+        <tr>
+            <th><strong>Дата</strong></th>
+            <th><strong>Группа</strong></th>
+            <th><strong>Наименование</strong></th>
+            <th><strong>Длина, мм</strong></th>
+            <th><strong>Количество, шт.</strong></th>
+            <th><strong>Количество, м.</strong></th>
+            <th><strong>Вес, кг/м</strong></th>
+            <th><strong>Вес, всего</strong></th>
+            <th><strong>Тип смолы</strong></th>
+            <th><strong>Срок поставки</strong></th>
+            <th><strong>Цвет</strong></th>
+            <th><strong>Контрагент</strong></th>
+        </tr>
+        {% for bid in bids %}
+            <tr>
+                <td>{{ bid.date }}</td>
+                <td>{{ bid.product }}</td>
+                <td>{{ bid.model }}</td>
+                <td>{{ bid.size }}</td>
+                <td>{{ bid.amount_psc }}</td>
+                <td>{{ bid.amount_meter }}</td>
+                <td>{{ bid.weight_unit }}</td>
+                <td>{{ bid.weight_total }}</td>
+                <td>{{ bid.material }}</td>
+                <td>{{ bid.delivery_date }}</td>
+                <td>{{ bid.color }}</td>
+                <td>{{ bid.customer }}</td>
+            </tr>
+        {% endfor %}
+        {% for qqq in q %}
+            <tr>
+                <td><strong>Итого:</strong></td>
+                <td><strong>{{ qqq.product__name }}</strong></td>
+                <td></td>
+                <td><strong>{{ qqq.size__name__sum }}</strong></td>
+                <td><strong>{{ qqq.amount_psc__sum }}</strong></td>
+                <td><strong>{{ qqq.amount_meter__sum }}</strong></td>
+                <td><strong>{{ qqq.weight_unit__sum|floatformat:3 }}</strong></td>
+                <td><strong>{{ qqq.weight_total__sum|floatformat:3 }}</strong></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <div>
+        <a href="/add_bid/" class="btn btn-success" role="button">Добавить заявку</a>
+    </div>
+
+{#    <p>{{ q }}</p>#}
+
+    <br>
+    <p><strong>Z</strong></p>
+    <table class="table table-condensed table-striped">
+        <tr>
+            {% for zzz in z %}
+                <th><strong>{{ zzz.month }}</strong></th>
+            {% endfor %}
+        </tr>
+        <tr>
+        {% for zzz in z %}
+{#            <tr>#}
+                <td>{{ zzz.amount_psc__sum }}</td>
+{#            </tr>#}
+        {% endfor %}
+        </tr>
+    </table>
+
+    <br>
+    <p><strong>Z1 and Z</strong></p>
+    <table class="table table-condensed table-striped">
+        <tr>
+            <th>Наименование</th>
+            {% for zzz in z1 %}
+                <th><strong>{{ zzz.month }}</strong></th>
+            {% endfor %}
+        </tr>
+{#        <tr>#}
+        {% for zzz in z %}
+            <tr>
+                <td>{{ zzz.model__name }}</td>
+            </tr>
+        {% endfor %}
+{#        </tr>#}
+    </table>
+
+    <br>
+    <p><strong>month_overview</strong></p>
+    <p>{{ month_overview }}</p>
+    <table class="table table-condensed table-striped">
+        <tr>
+            <th>Наименование</th>
+            <th>Октябрь</th>
+            <th>Ноябрь</th>
+            <th>Декабрь</th>
+            <th>Январь</th>
+            <th>Февраль</th>
+            <th>Март</th>
+            <th>Апрель</th>
+            <th>Май</th>
+            <th>Июнь</th>
+        </tr>
+        {% for zzz in month_overview %}
+            <tr>
+                <td>{{ zzz.model__name }}</td>
+                <td>{{ zzz.okt }}</td>
+                <td>{{ zzz.nov }}</td>
+                <td>{{ zzz.dec }}</td>
+                <td>{{ zzz.jan }}</td>
+                <td>{{ zzz.feb }}</td>
+                <td>{{ zzz.mar }}</td>
+                <td>{{ zzz.apr }}</td>
+                <td>{{ zzz.may }}</td>
+                <td>{{ zzz.june }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <p>
+        <p><strong>Z</strong></p>
+        <p>{{ z }}</p>
+        <p><strong>Z1</strong></p>
+        <p>{{ z1 }}</p>
+        <p><strong>Table Z</strong></p>
+        {% for zzz in z %}
+            <p>{{ zzz.month }}&nbsp;{{ zzz.model__name }}&nbsp;{{ zzz.delivery_date }}&nbsp;{{ zzz.amount_psc__sum }}</p>
+{#            <p>{{ zzz }}</p>#}
+        {% endfor %}
+    </p>
+
+    <p><strong>D</strong></p>
+    <p>{{ d }}</p>
+    {% for zzz in d %}
+        <p>{{ zzz.month }}&nbsp;{{ zzz.name }}&nbsp;{{ zzz.amount }}</p>
+    {% endfor %}
+    <p><strong>Z3</strong></p>
+    <p>{{ z3 }}</p>
+    {% for zzz in z3 %}
+{#        <p>{{ zzz.delivery_date|date:"F Y" }}&nbsp;{{ zzz.model__name }}&nbsp;{{ zzz.amount_psc__sum }}</p>#}
+        <p>{{ zzz.delivery_date }}&nbsp;{{ zzz.model__name }}&nbsp;{{ zzz.amount_psc__sum }}</p>
+    {% endfor %}
+{% endblock %}

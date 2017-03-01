@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block extrahead %}
+    <link href="/static/jquery-ui-1.12.1/jquery-ui.css" type="text/css" media="all" rel="stylesheet" />
+{% endblock %}
+
+{% block menu %}
+    <ul class="nav nav-tabs">
+        <li role="presentation"><a href="{% url 'bid' %}">Продажи</a></li>
+        <li role="presentation" class="active"><a href="{% url 'designer' %}">Конструкторы</a></li>
+        <li role="presentation"><a href="{% url 'technologist' %}">Технологи</a></li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+
+    <h3>Добавление</h3>
+
+    <form action="" method="post" class="form-horizontal">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}" class="col-md-2 control-label text-left">{{ field.label }}</label>
+                <div class="col-md-5">
+                    {{ field }}
+                </div>
+            </div>
+        {% endfor %}
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-5">
+                <button type="submit" class="btn btn-default">Добавить</button>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}
+
+{% block jquery %}
+    <script type="text/javascript" src="/static/jquery-ui-1.12.1/jquery-ui.js"></script>
+
+    <script>
+        {% comment %}jQuery(document).ready(function(){
+            jQuery(".datepicker").datepicker();
+        });{% endcomment %}
+        $(function() {
+            $( ".datepicker" ).datepicker({
+                changeMonth: true,
+                changeYear: true,
+{#                showButtonPanel: true,#}
+                minDate: "-1Y",
+                maxDate: "+10Y",
+                dateFormat: "dd.mm.yy",
+{#                showOn: "button",#}
+{#                buttonImage: "images/calendar.gif",#}
+{#                buttonImageOnly: true,#}
+{#                buttonText: "Select date",#}
+            });
+        });
+    </script>
+{% endblock %}

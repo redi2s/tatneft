@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block extrahead %}
+    <link href="{% static 'admin/css/base.css' %}" type="text/css" media="all" rel="stylesheet" />
+    <link href="{% static 'admin/css/forms.css' %}" type="text/css" media="all" rel="stylesheet" />
+
+    {#<link href="{% static 'admin/css/widgets.css' %}" type="text/css" media="all" rel="stylesheet" />#}
+    <script type="text/javascript" src="/admin/jsi18n/"></script>
+    <script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
+
+    {#<script type="text/javascript" src="{% static 'admin/js/calendar.js' %}"></script>#}
+    {#<script type="text/javascript" src="{% static 'admin/js/admin/DateTimeShortcuts.js' %}"></script>#}
+    {{ form.media }}
+
+    <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="results">
+    <table id="result_list">
+        <thead>
+            <tr>
+                <th class="sortable"><strong>Дата</strong></th>
+                <th class="sortable"><strong>Группа</strong></th>
+                <th class="sortable"><strong>Наименование</strong></th>
+                <th class="sortable"><strong>Длина, мм</strong></th>
+                <th class="sortable"><strong>Количество, шт.</strong></th>
+                <th class="sortable"><strong>Количество, м.</strong></th>
+                <th class="sortable"><strong>Вес, кг/м</strong></th>
+                <th class="sortable"><strong>Вес, всего</strong></th>
+                <th class="sortable"><strong>Тип смолы</strong></th>
+                <th class="sortable"><strong>Срок поставки</strong></th>
+                <th class="sortable"><strong>Цвет</strong></th>
+                <th class="sortable"><strong>Контрагент</strong></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for bid in bids %}
+            <tr>
+                <td class="nowrap">
+                    {{ bid.date }}
+                </td>
+                <td class="nowrap">
+                    {{ bid.product }}
+                </td>
+                <td class="nowrap">
+                    {{ bid.model }}
+                </td>
+                <td class="nowrap">
+                    {{ bid.size }}
+                </td>
+                <td class="nowrap">
+                    {{ bid.amount_psc }}
+                </td>
+                <td class="nowrap">
+                    {{ bid.amount_meter }}
+                </td>
+                <td class="nowrap">
+                    {{ bid.weight_total }}
+                </td>
+                <td class="nowrap">
+                    {{ bid.weight_unit }}
+                </td>
+                <td class="nowrap">
+                    {{ bid.material }}
+                </td>
+                <td class="nowrap">
+                    {{ bid.delivery_date }}
+                </td>
+                <td class="nowrap">
+                    {{ bid.color }}
+                </td>
+                <td class="nowrap">
+                    {{ bid.customer }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+    <br><h3>Добавить заявку</h3><br>
+
+    <form action="/" method="post">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <input type="submit" value="Сохранить">
+    </form>
+
+    <br>
+
+    {% for composition in compositions %}
+        <p>{{ composition.model.product.name }}&nbsp;{{ composition.model.name }}&nbsp;{{ composition.name }}</p>
+    {% endfor%}
+
+    <script>
+  $(function() {
+    $( ".datepicker" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      yearRange: "1900:2012",
+      // You can put more options here.
+
+    });
+  });
+  </script>
+{% endblock %}

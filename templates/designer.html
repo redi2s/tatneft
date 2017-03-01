@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block menu %}
+    <ul class="nav nav-tabs">
+        <li role="presentation"><a href="{% url 'bid' %}">Продажи</a></li>
+        <li role="presentation" class="active"><a href="{% url 'designer' %}">Конструкторы</a></li>
+        <li role="presentation"><a href="{% url 'technologist' %}">Технологи</a></li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+
+    <h3>Конструкторы</h3>
+
+    <table class="table table-condensed table-striped">
+        <tr>
+            <th><strong>Группа</strong></th>
+            <th><strong>Модель</strong></th>
+            <th><strong>Наименование</strong></th>
+            <th><strong>Ед. изм.</strong></th>
+            <th><strong>Норма расхода</strong></th>
+            <th><strong>Потери</strong></th>
+            <th><strong>Итого НР</strong></th>
+        </tr>
+        {% for composition in compositions %}
+            <tr>
+{#                <td>{{ composition.model.product.name }}</td>#}
+                <td>{{ composition.model.product }}</td>
+                <td>{{ composition.model }}</td>
+                <td>{{ composition.name }}</td>
+                <td>{{ composition.unit }}</td>
+                <td>{{ composition.expense }}</td>
+                <td>{{ composition.loss }}</td>
+                <td>{{ composition.total_expense }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <div>
+        <a href="{% url 'add_designer' %}" class="btn btn-success" role="button">Добавить</a>
+    </div>
+
+    <hr>
+
+    <div>
+        {% for zzz in z %}
+            <p>{{ zzz.month }}&nbsp;{{ zzz.model__name }}&nbsp;{{ zzz.amount_psc__sum }}&nbsp;</p>
+        {% endfor %}
+    </div>
+
+    <hr>
+
+    <div>
+        {% for zzz in z1 %}
+            <p>{{ zzz.month }}&nbsp;{{ zzz.composition__name }}&nbsp;{{ zzz.amount__sum }}&nbsp;</p>
+        {% endfor %}
+    </div>
+{% endblock %}
